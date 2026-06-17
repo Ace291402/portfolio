@@ -162,21 +162,21 @@
             <div class="bg-surface-container-low border border-outline-variant rounded-xl p-md shadow-sm">
                 <div class="flex flex-col">
                     <span class="font-label-md text-caption text-on-surface-variant uppercase tracking-wider mb-1">TOTAL PROJECTS</span>
-                    <span class="font-headline-lg text-headline-lg text-primary">0</span>
+                    <span class="font-headline-lg text-headline-lg text-primary">{{ $projects->count() }}</span>
                 </div>
                 <div class="mt-sm flex items-center text-primary font-label-md">
                     <span class="material-symbols-outlined text-[18px]" data-icon="trending_up">trending_up</span>
-                    <span class="ml-1">+3 this month</span>
+                    <span class="ml-1">{{ $projects->count() > 0 ? '+' . min($projects->count(), 3) . ' this month' : 'No projects yet' }}</span>
                 </div>
             </div>
             <div class="bg-surface-container-low border border-outline-variant rounded-xl p-md shadow-sm">
                 <div class="flex flex-col">
                     <span class="font-label-md text-caption text-on-surface-variant uppercase tracking-wider mb-1">TOTAL SKILLS</span>
-                    <span class="font-headline-lg text-headline-lg text-primary"></span>
+                    <span class="font-headline-lg text-headline-lg text-primary">{{ $skills->count() }}</span>
                 </div>
                 <div class="mt-sm flex items-center text-primary font-label-md">
                     <span class="material-symbols-outlined text-[18px]" data-icon="verified">verified</span>
-                    <span class="ml-1">8 advanced</span>
+                    <span class="ml-1">{{ $skills->count() }} skills</span>
                 </div>
             </div>
         </section>
@@ -184,41 +184,30 @@
         <section class="mb-xl">
             <div class="flex justify-between items-end mb-md px-1">
                 <h2 class="font-headline-md text-headline-md text-on-surface">Recent Projects</h2>
-                <button class="font-label-md text-on-surface-variant hover:text-primary transition-colors">View All</button>
+                <a href="{{ route('projects.index') }}" class="font-label-md text-primary hover:text-primary/80 transition-colors">View All</a>
             </div>
             <div class="flex overflow-x-auto gap-md hide-scrollbar -mx-lg px-lg pb-md">
-                <!-- Project Card 1 -->
-                <div class="min-w-[280px] bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden shadow-sm flex-shrink-0 group">
-                    <div class="relative h-44 overflow-hidden">
-                        <img alt="Software Development Workspace" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsR47FVYYFS3u11i7inlpOH60BHSq8tNGS-Xt8D-oo7I9yhI8woYZ4V2lFAUJmpP7LL_qONvVzJ49COD3YFA-_TUk-eUkd6kMCQ5Rgja3Tf7qmZbHxaCwBNt6Qk0TKIDCl_ibPkVm9DVmp-MaNDgtnnXyvRqmAhCDPvPQfDbPler-Kj4duYZV5Zsqd8ulArIcHKeKynCu-3gViUl5Y2ngp5grnkgeC0-xblM31ytjztEbbZHB5atNf-WeH8blvS63QYXlz5QmTeefd" />
-                        <div class="absolute top-sm right-sm bg-primary text-on-primary font-label-md px-2 py-1 rounded-lg text-[10px] uppercase tracking-widest shadow-lg">ACTIVE</div>
-                    </div>
-                    <div class="p-md">
-                        <h3 class="font-headline-md text-body-lg font-bold mb-1">Quantum Ledger API</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-md">Financial backend infrastructure overhaul.</p>
-                        <div class="flex flex-wrap gap-xs">
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">TYPESCRIPT</span>
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">RUST</span>
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">POSTGRES</span>
+                @forelse($projects->take(3) as $project)
+                    <div class="min-w-[280px] bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden shadow-sm flex-shrink-0 group">
+                        <div class="relative h-44 overflow-hidden">
+                            <img alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="{{ $project->image ? asset('storage/' . $project->image) : 'https://via.placeholder.com/560x320?text=No+Image' }}" />
+                            <div class="absolute top-sm right-sm bg-primary text-on-primary font-label-md px-2 py-1 rounded-lg text-[10px] uppercase tracking-widest shadow-lg">{{ $project->category ?? 'Project' }}</div>
+                        </div>
+                        <div class="p-md">
+                            <h3 class="font-headline-md text-body-lg font-bold mb-1">{{ $project->title }}</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant mb-md">{{ Str::limit($project->description, 80) }}</p>
+                            <div class="flex flex-wrap gap-xs">
+                                @foreach($project->skills ?? [] as $skill)
+                                    <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">{{ $skill }}</span>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Project Card 2 -->
-                <div class="min-w-[280px] bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden shadow-sm flex-shrink-0 group">
-                    <div class="relative h-44 overflow-hidden">
-                        <img alt="Industrial Design Process" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJL4tG5-sjd7RmivgrFyDwZKTtdxLAIaLxOwtRArUw45ExElftTrY58FRUtUG7mld-qeunpQDoHMfxXaKMDWeJqeCmhdbzNwNy3Btwn4FMiuKqy3bfx5yKeMRwBWKnnsc2Vzc0_ZZY35oQF_Mcrx6pfV5ZzKOTVHoYIr_3VVzgzwt3FAX_kYcVzSLZlM6LLQ0iryTHDGbTmlEVFlja8jI2_1B1r9Eov60wxrjpUWopPiF8vPIryq8Qj9IiighELRrSqbxMeUmAxciF" />
-                        <div class="absolute top-sm right-sm bg-secondary-container text-on-secondary-container font-label-md px-2 py-1 rounded-lg text-[10px] uppercase tracking-widest shadow-lg">PLANNING</div>
+                @empty
+                    <div class="min-w-[280px] bg-surface-container-low rounded-xl border border-outline-variant p-md shadow-sm text-on-surface-variant">
+                        No recent projects yet.
                     </div>
-                    <div class="p-md">
-                        <h3 class="font-headline-md text-body-lg font-bold mb-1">Nexus Mobile App</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-md">Cross-platform ecosystem for smart home.</p>
-                        <div class="flex flex-wrap gap-xs">
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">FLUTTER</span>
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">DART</span>
-                            <span class="bg-surface-container-highest text-on-surface-variant px-2.5 py-1 rounded-full font-label-md text-[10px] uppercase">IOT</span>
-                        </div>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </section>
         <!-- Top Skills Section -->
@@ -260,7 +249,7 @@
 
                     <div class="w-full h-2.5 bg-surface-container-highest rounded-full overflow-hidden">
                         <div class="h-full bg-primary rounded-full shadow-[0_0_8px_rgba(208,188,255,0.4)]"
-                            style="width: {{ $skill->level }}%">
+                            style="width: {{ $skill->level }}%;">
                         </div>
                     </div>
 

@@ -119,23 +119,26 @@
                     <div class="skill-card group text-center">
 
                         <div class="w-16 h-16 mx-auto rounded-xl bg-primary/10 flex items-center justify-center mb-2">
+                        @if($skill->icon_class)
+                            <i class="devicon-{{ $skill->icon_class }} colored text-[36px]"></i>
+                        @else
                             <span class="material-symbols-outlined text-primary">code</span>
+                        @endif
+                    </div>
+
+                    <span class="block font-bold text-on-surface">
+                        {{ $skill->name }}
+                    </span>
+
+                    <p class="text-on-surface-variant text-sm uppercase tracking-[0.18em] mt-2">
+                        {{ $skill->level_label }} • {{ $skill->level }}%
+                    </p>
+
+                    <div class="w-full h-2 bg-surface-container-highest rounded-full mt-3 overflow-hidden">
+                        <div class="h-full bg-primary"
+                            style="width: {{ $skill->level }}%;">
                         </div>
-
-                        <span class="block font-bold text-on-surface">
-                            {{ $skill->name }}
-                        </span>
-
-                        <div class="w-full h-2 bg-surface-container-highest rounded-full mt-2 overflow-hidden">
-                            <div class="h-full bg-primary"
-                                style="width: {{ $skill->level }}%">
-                            </div>
-                        </div>
-
-                        <small class="text-on-surface-variant text-xs">
-                            {{ $skill->level }}%
-                        </small>
-
+                    </div>
                     </div>
 
                     @empty
