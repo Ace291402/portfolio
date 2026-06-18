@@ -29,9 +29,22 @@
                 <a class="text-[#dee5ff]/70 font-medium hover:text-[#ba9eff] transition-colors duration-300" href="#projects">Projects</a>
                 <a class="text-[#dee5ff]/70 font-medium hover:text-[#ba9eff] transition-colors duration-300" href="#contact">Contact</a>
             </div>
-            <a href="#contact" class="inline-block bg-gradient-to-r from-primary-dim to-primary px-6 py-2 rounded-full text-on-primary-fixed font-bold scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(186,158,255,0.4)]">
-                Hire Me
-            </a>
+            <div class="flex items-center gap-3">
+                <!-- Guest Mode Button -->
+                <button class="inline-block bg-surface-container border border-outline-variant/30 px-6 py-2 rounded-full text-on-surface font-bold scale-95 active:scale-90 transition-transform hover:bg-surface-container-highest">
+                    👁️ Guest Mode
+                </button>
+                <!-- Admin Mode Button/Link -->
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                    <a href="/dashboard" class="inline-block bg-gradient-to-r from-primary-dim to-primary px-6 py-2 rounded-full text-on-primary-fixed font-bold scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(186,158,255,0.4)]">
+                        🔐 Admin Dashboard
+                    </a>
+                @else
+                    <a href="/login" class="inline-block bg-gradient-to-r from-primary-dim to-primary px-6 py-2 rounded-full text-on-primary-fixed font-bold scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(186,158,255,0.4)]">
+                        🔐 Admin Login
+                    </a>
+                @endif
+            </div>
         </div>
     </nav>
     <main class="pt-20">

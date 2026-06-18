@@ -27,7 +27,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.send
 
 /*
 |--------------------------------------------------------------------------
-| Dashboard (FIXED - NO MORE Undefined Variables)
+| Dashboard (Admin Only)
 |--------------------------------------------------------------------------
 */
 Route::get('/dashboard', function () {
@@ -37,39 +37,39 @@ Route::get('/dashboard', function () {
 
     return view('dashboard', compact('skills', 'projects'));
 
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'is_admin'])->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
-| Portfolio Page
+| Portfolio Page (Admin Only)
 |--------------------------------------------------------------------------
 */
 Route::get('/portfolio', [ProfileController::class, 'index'])
-    ->middleware(['auth'])
+    ->middleware(['auth', 'is_admin'])
     ->name('portfolio.index');
 
 /*
 |--------------------------------------------------------------------------
-| Skills CRUD
+| Skills CRUD (Admin Only)
 |--------------------------------------------------------------------------
 */
 Route::resource('skills', SkillController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'is_admin']);
 
 /*
 |--------------------------------------------------------------------------
-| Projects CRUD
+| Projects CRUD (Admin Only)
 |--------------------------------------------------------------------------
 */
 Route::resource('projects', ProjectController::class)
-    ->middleware(['auth']);
+    ->middleware(['auth', 'is_admin']);
 
 /*
 |--------------------------------------------------------------------------
-| Profile Settings
+| Profile Settings (Admin Only)
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -80,7 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
-    // Resume upload/manage (authenticated)
+    // Resume upload/manage (authenticated & admin only)
     Route::get('/admin/resume', [ResumeController::class, 'edit'])->name('resume.edit');
     Route::post('/admin/resume', [ResumeController::class, 'update'])->name('resume.update');
 });
