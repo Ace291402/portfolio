@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ProjectController;
 use App\Models\Skill;
@@ -78,6 +79,10 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    // Resume upload/manage (authenticated)
+    Route::get('/admin/resume', [ResumeController::class, 'edit'])->name('resume.edit');
+    Route::post('/admin/resume', [ResumeController::class, 'update'])->name('resume.update');
 });
 
 /*

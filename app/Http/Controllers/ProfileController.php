@@ -41,11 +41,17 @@ class ProfileController extends Controller
     {
         $path = storage_path('app/public/resume.pdf');
 
-        if (!file_exists($path)) {
-            abort(404, 'Resume not found.');
+        if (file_exists($path)) {
+            return response()->download($path, 'Resume.pdf');
         }
 
-        return response()->download($path, 'Resume.pdf');
+        // Fallback: return a downloadable plain-text resume if PDF is missing.
+        $contents = "Name: Michael Angelo\nEmail: michaelangelo@example.com\n\nSummary:\nMotivated fresh graduate experienced in Laravel, PHP, MySQL, Tailwind and web development.\n\nProjects:\n- DOST Project (Laravel)\n- Barangay API Project\n\nPlease replace this placeholder with your actual PDF at storage/app/public/resume.pdf";
+
+        return response($contents, 200, [
+            'Content-Type' => 'text/plain',
+            'Content-Disposition' => 'attachment; filename="Resume.txt"',
+        ]);
     }
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
