@@ -39,14 +39,19 @@ class ProfileController extends Controller
      */
     public function downloadCv()
     {
-        $path = storage_path('app/public/resume.pdf');
+        $pdfPath = storage_path('app/public/resume.pdf');
+        $textPath = storage_path('app/public/resume.txt');
 
-        if (file_exists($path)) {
-            return response()->download($path, 'Resume.pdf');
+        if (file_exists($pdfPath)) {
+            return response()->download($pdfPath, 'Resume.pdf');
         }
 
-        // Fallback: return a downloadable plain-text resume if PDF is missing.
-        $contents = "Name: Michael Angelo\nEmail: michaelangelo@example.com\n\nSummary:\nMotivated fresh graduate experienced in Laravel, PHP, MySQL, Tailwind and web development.\n\nProjects:\n- DOST Project (Laravel)\n- Barangay API Project\n\nPlease replace this placeholder with your actual PDF at storage/app/public/resume.pdf";
+        if (file_exists($textPath)) {
+            return response()->download($textPath, 'Resume.txt');
+        }
+
+        // Fallback: return a downloadable plain-text resume if no custom file exists.
+        $contents = "Name: Michael Angelo\nEmail: michaelangelo@example.com\n\nSummary:\nMotivated fresh graduate experienced in Laravel, PHP, MySQL, Tailwind and web development.\n\nProjects:\n- DOST Project (Laravel)\n- Barangay API Project\n\nPlease update your resume via the admin resume page.";
 
         return response($contents, 200, [
             'Content-Type' => 'text/plain',

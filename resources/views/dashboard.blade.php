@@ -153,7 +153,12 @@
                 <span class="material-symbols-outlined text-primary text-headline-lg" data-icon="account_tree">account_tree</span>
                 <h1 class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">SkillArch</h1>
             </div>
-            <button class="material-symbols-outlined text-primary hover:text-primary transition-colors duration-200 p-2 rounded-full" data-icon="account_circle">account_circle</button><button class="material-symbols-outlined text-primary hover:text-primary transition-colors duration-200 p-2 rounded-full" data-icon="search">search</button>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('resume.edit') }}" class="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-on-primary-fixed shadow-sm hover:bg-primary-container transition-colors">
+                    <span class="material-symbols-outlined">upload_file</span>
+                    Upload Resume
+                </a>
+            </div>
         </div>
     </header>
     <main class="max-w-screen-2xl mx-auto px-lg pt-lg pb-32">
@@ -280,10 +285,13 @@
             </a>
 
             <!-- Logout -->
-            <button class="flex flex-col items-center justify-center text-error hover:bg-error-container/20 rounded-xl py-1.5 active:scale-90 transition-all px-2">
-                <span class="material-symbols-outlined" data-icon="logout">logout</span>
-                <span class="font-label-md text-label-md">Logout</span>
-            </button>
+            <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                @csrf
+                <button type="submit" class="flex flex-col items-center justify-center text-error hover:bg-error-container/20 rounded-xl py-1.5 active:scale-90 transition-all px-2 border-none bg-transparent cursor-pointer">
+                    <span class="material-symbols-outlined" data-icon="logout">logout</span>
+                    <span class="font-label-md text-label-md">Logout</span>
+                </button>
+            </form>
         </div>
     </nav>
 </body>
