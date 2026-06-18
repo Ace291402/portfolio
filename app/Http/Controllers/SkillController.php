@@ -7,6 +7,7 @@ use App\Models\Skill;
 
 class SkillController extends Controller
 {
+    // Display a listing of the skills
     public function index()
     {
         $skills = Skill::all();
