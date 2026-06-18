@@ -32,8 +32,10 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    // Default session lifetime in minutes. Increase to one week when not set.
+    'lifetime' => (int) env('SESSION_LIFETIME', 60 * 24 * 7),
 
+    // Do not expire sessions when the browser closes unless explicitly configured.
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
     /*
@@ -169,7 +171,8 @@ return [
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    // Default to false for local development; can be set via env in production.
+    'secure' => env('SESSION_SECURE_COOKIE', false),
 
     /*
     |--------------------------------------------------------------------------

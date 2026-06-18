@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\ProjectController;
 use App\Models\Skill;
@@ -16,6 +17,12 @@ use App\Models\Project;
 */
 
 Route::get('/', [ProfileController::class, 'index']);
+
+// Download resume/CV
+Route::get('/download-cv', [ProfileController::class, 'downloadCv'])->name('download.cv');
+
+// Contact form handler
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.send');
 
 /*
 |--------------------------------------------------------------------------

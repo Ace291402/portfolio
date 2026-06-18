@@ -33,6 +33,20 @@ class ProfileController extends Controller
 
         return view('portfolio.index', compact('skills', 'projects'));
     }
+    
+    /**
+     * Download the CV/resume file if present in storage/app/public/resume.pdf
+     */
+    public function downloadCv()
+    {
+        $path = storage_path('app/public/resume.pdf');
+
+        if (!file_exists($path)) {
+            abort(404, 'Resume not found.');
+        }
+
+        return response()->download($path, 'Resume.pdf');
+    }
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());

@@ -29,9 +29,9 @@
                 <a class="text-[#dee5ff]/70 font-medium hover:text-[#ba9eff] transition-colors duration-300" href="#projects">Projects</a>
                 <a class="text-[#dee5ff]/70 font-medium hover:text-[#ba9eff] transition-colors duration-300" href="#contact">Contact</a>
             </div>
-            <button class="bg-gradient-to-r from-primary-dim to-primary px-6 py-2 rounded-full text-on-primary-fixed font-bold scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(186,158,255,0.4)]">
+            <a href="#contact" class="inline-block bg-gradient-to-r from-primary-dim to-primary px-6 py-2 rounded-full text-on-primary-fixed font-bold scale-95 active:scale-90 transition-transform hover:shadow-[0_0_20px_rgba(186,158,255,0.4)]">
                 Hire Me
-            </button>
+            </a>
         </div>
     </nav>
     <main class="pt-20">
@@ -47,13 +47,13 @@
                         “From student to developer—coding my future one project at a time.”
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <button class="bg-gradient-to-r from-primary-dim to-primary text-on-primary-fixed font-bold py-4 px-8 rounded-full flex items-center gap-2 group transition-all">
+                        <a href="#contact" class="inline-flex bg-gradient-to-r from-primary-dim to-primary text-on-primary-fixed font-bold py-4 px-8 rounded-full items-center gap-2 group transition-all">
                             Hire Me
                             <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </button>
-                        <button class="bg-transparent border border-outline-variant/30 text-on-surface font-bold py-4 px-8 rounded-full hover:bg-surface-variant transition-colors">
+                        </a>
+                        <a href="{{ route('download.cv') }}" class="inline-flex bg-transparent border border-outline-variant/30 text-on-surface font-bold py-4 px-8 rounded-full hover:bg-surface-variant transition-colors" target="_blank">
                             Download CV
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="relative flex justify-center items-center">
@@ -251,18 +251,19 @@
                 <div class="bg-surface-container rounded-3xl p-8 md:p-12 border border-outline-variant/10 shadow-2xl relative overflow-hidden">
                     <!-- Glassy decorative element -->
                     <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 blur-[80px] rounded-full"></div>
-                    <form class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <form action="{{ route('contact.send') }}" method="POST" class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        @csrf
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-on-surface-variant uppercase tracking-widest ml-1">Your Name</label>
-                            <input class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="Michael Angelo S Lugo" type="text" />
+                            <input name="name" class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="Michael Angelo S Lugo" type="text" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-on-surface-variant uppercase tracking-widest ml-1">Email Address</label>
-                            <input class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="MichaelAngelo@example.com" type="email" />
+                            <input name="email" class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="MichaelAngelo@example.com" type="email" />
                         </div>
                         <div class="md:col-span-2 space-y-2">
                             <label class="text-sm font-bold text-on-surface-variant uppercase tracking-widest ml-1">Project Message</label>
-                            <textarea class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="Tell me about your vision..." rows="4"></textarea>
+                            <textarea name="message" class="w-full bg-surface-container-lowest border-none rounded-xl py-4 px-6 focus:ring-2 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant/40 transition-all" placeholder="Tell me about your vision..." rows="4"></textarea>
                         </div>
                         <div class="md:col-span-2 mt-4">
                             <button class="w-full bg-gradient-to-r from-primary-dim to-primary py-4 rounded-xl text-on-primary-fixed font-black text-lg tracking-widest uppercase hover:shadow-[0_10px_30px_rgba(132,85,239,0.3)] transition-all flex items-center justify-center gap-3" type="submit">
